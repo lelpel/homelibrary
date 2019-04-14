@@ -88,7 +88,9 @@ export default class Books extends Component {
           {showModal && <Add />}
           <ul className="booklg">{listItems}</ul>
         </div>
-        <Button onClick={this.showModal}>Add book</Button>
+        <Button className="add" onClick={this.showModal}>
+          Add book
+        </Button>
       </div>
     );
   }
