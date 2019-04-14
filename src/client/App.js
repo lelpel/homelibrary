@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import './app.css';
-import ReactImage from './react.png';
+import './bootstrap.min.css';
+
+import AuthReg from './pages/AuthReg';
+import Books from './pages/Books';
+import Header from './components/Header';
 
 export default class App extends Component {
   // state = { username: null };
@@ -14,10 +20,16 @@ export default class App extends Component {
   render() {
     // const { username } = this.state;
     return (
-      <div>
-        {/* {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>} */}
-        <img src={ReactImage} alt="react" />
-      </div>
+      <Router>
+        <div className="App">
+          <Header />
+          <Route exact path="/" component={AuthReg} />
+          <div className="container">
+            <Route exact path="/allbooks" component={Books} />
+          </div>
+          {/* <Footer /> */}
+        </div>
+      </Router>
     );
   }
 }

@@ -14,19 +14,29 @@ const router = express.Router();
 // Load User model
 const User = require('./../models/User');
 
+router.get('/', (req, res) => {
+  User.find()
+    .sort({ name: 1 })
+    .then(books => res.json(books))
+    .catch(err => res.json({ error: 'No books found' }));
+});
+
 router.get('/test', (req, res) => res.json({ msg: 'Users Works' }));
 
 // @route   POST api/users/register
 // @desc    Register user
 // @access  Public
 router.post('/register', (req, res) => {
+  // return res.status(404);
   // const { errors, isValid } = validateRegisterInput(req.body);
 
   //   if (!isValid) {
   //     return res.status(400).json(errors);
   //   }
 
-  User.findOne({ email: req.body.email }).then(user => {
+  console.log(req.body);
+
+  User.findOne({ name: req.body.name }).then(user => {
     if (user) {
       return res.status(400).json({ error: 'User already exists' });
     }
@@ -38,7 +48,7 @@ router.post('/register', (req, res) => {
 
     bcrypt.genSalt(10, (error, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if (err) throw err;
+        // if (err) throw err;
         newUser.password = hash;
         newUser
           .save()
@@ -67,7 +77,7 @@ router.post('/login', (req, res) => {
     // Check for user
     if (!user) {
       const error = {
-        name: 'User already exists'
+        name: 'Absolutely no user'
       };
       return res.status(404).json(error);
     }
