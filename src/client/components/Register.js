@@ -35,16 +35,6 @@ export default class Register extends React.Component {
       password: this.state.password
     };
 
-    console.log(newUser);
-    // axios
-    //   .get(`http://localhost:8080/api/users/test`)
-    //   .then(res => console.log(res.data));
-
-    // , {
-    //     headers: {
-    //       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-    //     }
-    //   }
     axios
       .post('http://localhost:8080/api/users/register', newUser)
       .then(res => {

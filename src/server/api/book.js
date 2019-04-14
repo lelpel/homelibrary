@@ -34,23 +34,23 @@ router.post(
  * @param {*} userId req.user.id
  * @param {*} bookId req.params.id
  */
-const bringBack = (userId, bookId) => {
-  User.findOne({ user: userId }).then(user => {
-    Book.findById(bookId)
-      .then(book => {
-        if (book.user.toString() !== userId) {
-          return { error: "You can't bring back book you didn't take" };
-        }
+const bringBack = bookId => {
+  // User.findOne({ user: userId }).then(user => {
+  Book.findById(bookId)
+    .then(book => {
+      // if (book.user.toString() !== userId) {
+      //   return { error: "You can't bring back book you didn't take" };
+      // }
 
-        book.taken = false;
-        book.save().then(book => {
-          return book;
-        });
-      })
-      .catch(err => ({
-        error: 'No book found'
-      }));
-  });
+      book.taken = false;
+      book.save().then(book => {
+        return book;
+      });
+    })
+    .catch(err => ({
+      error: 'No book found'
+    }));
+  // });
 };
 
 /**
@@ -59,21 +59,21 @@ const bringBack = (userId, bookId) => {
  * @param {*} bookId req.params.id
  */
 const take = (userId, bookId) => {
-  User.findOne({ user: userId }).then(user => {
-    Book.findById(bookId)
-      .then(book => {
-        book.taken = true;
-        book.user = userId;
-        book.takenDate = Date.now();
+  // User.findOne({ user: userId }).then(user => {
+  Book.findById(bookId)
+    .then(book => {
+      book.taken = true;
+      book.user = userId;
+      book.takenDate = Date.now();
 
-        book.save().then(book => {
-          return book;
-        });
-      })
-      .catch(err => ({
-        error: 'No book found'
-      }));
-  });
+      book.save().then(book => {
+        return book;
+      });
+    })
+    .catch(err => ({
+      error: 'No book found'
+    }));
+  // });
 };
 
 router.put(
@@ -81,8 +81,8 @@ router.put(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Book.findById(req.params.id).then(book => {
-      if (book.taken) res.json(bringBack(req.user.id, req.params.id));
-      else res.json(take(req.user.id, req.params.id));
+      if (book.taken) res.json(bringBack(req.params.id));
+      else res.json(take(req.body.userid, req.params.id));
     });
   }
 );
@@ -96,7 +96,7 @@ router.delete(
         // Delete
         book.remove().then(() => res.json({ success: true }));
       })
-      .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+      .catch(err => res.status(404).json({ error: 'No book found' }));
   }
 );
 
