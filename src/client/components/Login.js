@@ -11,10 +11,11 @@ import {
   Button
 } from 'reactstrap';
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 
 import { Redirect } from 'react-router-dom';
 import setAuthToken from '../utils/setAuthToken';
+
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -47,7 +48,7 @@ export default class Login extends React.Component {
         // Set token to Auth header
         setAuthToken(token);
         // Decode token to get user data
-        const decoded = jwt_decode(token);
+        const decoded = jwtDecode(token);
         // Set current user
         console.log(decoded);
       })

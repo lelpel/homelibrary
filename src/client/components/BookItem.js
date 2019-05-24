@@ -12,8 +12,16 @@ import {
   Row
 } from 'reactstrap';
 import dayjs from 'dayjs';
-export default function BookItem(props) {
-  const { _id, author, name, published, taken, takenDate, user } = props.book;
+
+type Props = {
+  book: object,
+  take: function,
+  bringBack: function,
+  remove: function
+}
+
+export default function BookItem(props: Props) {
+  const { _id, author, name, published, taken, takenDate } = props.book;
   const { take, bringBack, remove } = props;
 
   let button;
@@ -21,6 +29,7 @@ export default function BookItem(props) {
   if (taken)
     button = (
       <Button
+        className="ml-2 mr-2"
         onClick={() => {
           bringBack(_id);
         }}
@@ -31,6 +40,7 @@ export default function BookItem(props) {
   if (!taken)
     button = (
       <Button
+        className="ml-2 mr-2"
         onClick={() => {
           take(_id);
         }}

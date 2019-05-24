@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { Row, Button } from 'reactstrap';
 import BookItem from '../components/BookItem';
 import Add from '../components/Add';
-
+import Li from '../components/styled/Li';
+import Ul from '../components/styled/Ul';
+import BookContainer from '../components/styled/BookContainer';
 export default class Books extends Component {
   constructor(props) {
     super(props);
@@ -72,25 +74,28 @@ export default class Books extends Component {
       return <h1>Data is loading...</h1>;
     }
     const listItems = books.map(book => (
-      <li key={book._id}>
+      <Li key={book._id}>
         <BookItem
           book={book}
           take={this.take}
           bringBack={this.bringBack}
           remove={this.remove}
         />
-      </li>
+      </Li>
     ));
 
     return (
       <div>
-        <div className="booklg">
-          {showModal && <Add />}
-          <ul className="booklg">{listItems}</ul>
-        </div>
-        <Button className="add" onClick={this.showModal}>
-          Add book
-        </Button>
+        <BookContainer>
+          <Row>
+            {showModal && <Add />}
+            <Ul noBullets>{listItems}</Ul>
+          </Row>
+
+          <Button className="mb-5" onClick={this.showModal}>
+            Add book
+          </Button>
+        </BookContainer>
       </div>
     );
   }

@@ -6,7 +6,7 @@ import Login from '../components/Login';
 export default function AuthReg() {
   return (
     <Container>
-      <Row>
+      <Row className="mt-4">
         <Col xs="6">
           <Register />
         </Col>

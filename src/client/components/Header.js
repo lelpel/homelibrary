@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, NavbarBrand, Button } from 'reactstrap';
+import { Navbar, NavbarBrand } from 'reactstrap';
 
 export default function Header() {
   return (
